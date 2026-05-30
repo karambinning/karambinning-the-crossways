@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Crossways — A locals' pub near King's Lynn station</title>
+<meta name="description" content="The Crossways is a community pub on South Everard Street, King's Lynn. Real ale, live music, garden, dogs welcome.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --moss: #1E2A22;
+    --moss-soft: #3F5147;
+    --brass: #C7B486;
+    --candle: #F4EFE6;
+    --ink: #14110D;
+    --paper: #F4EFE6;
+    --display: "Fraunces", Georgia, serif;
+    --body: "Source Serif 4", Georgia, serif;
+    --rhythm: clamp(1rem, .65rem + .9vw, 1.15rem);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: var(--rhythm);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1; font-weight: 600; }
+  p { text-wrap: pretty; hyphens: auto; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* Paper grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(rgba(20,17,13,.035) 1px, transparent 1px),
+      radial-gradient(rgba(20,17,13,.025) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+
+  /* ─────── NAV ─────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem clamp(1.2rem, 4vw, 3rem);
+    background: rgba(244, 239, 230, .82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(20,17,13,.08);
+  }
+  .nav__mark {
+    font-family: var(--display);
+    font-variation-settings: "opsz" 144;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .nav__links { display: flex; gap: clamp(1rem, 2.5vw, 2.2rem); font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; }
+  .nav__links a { position: relative; padding-bottom: 3px; }
+  .nav__links a::after {
+    content: ""; position: absolute; left: 0; right: 100%; bottom: 0;
+    height: 1px; background: var(--ink);
+    transition: right .35s ease;
+  }
+  .nav__links a:hover::after { right: 0; }
+  .nav__phone { font-family: var(--display); font-size: .95rem; letter-spacing: .02em; }
+  @media (max-width: 720px) {
+    .nav__links { display: none; }
+  }
+
+  /* ─────── HERO ─────── */
+  .hero {
+    background: var(--moss);
+    color: var(--candle);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    padding: 7rem clamp(1.2rem, 5vw, 4rem) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__eyebrow {
+    font-family: var(--body);
+    text-transform: uppercase;
+    letter-spacing: .35em;
+    font-size: .72rem;
+    color: var(--brass);
+    align-self: end;
+    padding-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(3.6rem, 17vw, 17rem);
+    letter-spacing: -.045em;
+    line-height: .82;
+    font-weight: 600;
+    padding-bottom: clamp(1.4rem, 4vw, 3rem);
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144;
+    color: var(--brass);
+    font-weight: 400;
+  }
+  .hero__break { display: block; }
+  .hero__meta {
+    display: flex; flex-wrap: wrap; gap: 1rem 2.6rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid rgba(199, 180, 134, .25);
+    font-size: .88rem;
+    color: rgba(244, 239, 230, .82);
+  }
+  .hero__meta strong { font-family: var(--display); color: var(--brass); font-weight: 600; letter-spacing: .02em; display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .18em; margin-bottom: .2rem; }
+
+  /* Marquee strip */
+  .marquee {
+    background: var(--brass);
+    color: var(--moss);
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee__track {
+    display: inline-flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: scroll 38s linear infinite;
+    padding: .85rem 0;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+  .marquee__track span { display: inline-flex; align-items: center; gap: 3rem; }
+  .marquee__track span::after { content: "✦"; color: var(--moss); opacity: .55; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* ─────── SECTIONS ─────── */
+  .section { padding: clamp(4rem, 9vw, 8rem) clamp(1.2rem, 5vw, 4rem); position: relative; }
+  .section--moss { background: var(--moss); color: var(--candle); }
+  .section--moss h2, .section--moss h3 { color: var(--candle); }
+  .section--moss a { color: var(--brass); }
+
+  .section__eyebrow {
+    font-family: var(--body);
+    text-transform: uppercase;
+    letter-spacing: .32em;
+    font-size: .72rem;
+    color: var(--moss-soft);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+  }
+  .section--moss .section__eyebrow { color: var(--brass); }
+
+  .section h2 {
+    font-family: var(--display);
+    font-variation-settings: "opsz" 100;
+    font-size: clamp(2.2rem, 5.5vw, 4.6rem);
+    letter-spacing: -.025em;
+    max-width: 18ch;
+    margin-bottom: 1.8rem;
+  }
+  .section h2 em { font-style: italic; color: var(--moss-soft); font-weight: 400; }
+  .section--moss h2 em { color: var(--brass); }
+
+  /* About */
+  #about .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+  #about .copy p { margin-bottom: 1.1rem; font-size: 1.08rem; line-height: 1.7; }
+  #about .copy p:first-of-type::first-letter {
+    font-family: var(--display);
+    font-variation-settings: "opsz" 144;
+    font-size: 4.2rem;
+    line-height: 1;
+    float: left;
+    padding: .35rem .55rem 0 0;
+    color: var(--moss-soft);
+    font-weight: 600;
+  }
+  @media (max-width: 760px) { #about .grid { grid-template-columns: 1fr; } }
+
+  /* Services / What's on */
+  .offerings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(199, 180, 134, .25);
+  }
+  .offering {
+    padding: 2rem 1.5rem 2.4rem 0;
+    border-bottom: 1px solid rgba(199, 180, 134, .25);
+  }
+  .offering h3 {
+    font-family: var(--display);
+    font-variation-settings: "opsz" 72;
+    font-size: 1.6rem;
+    margin-bottom: .8rem;
+    letter-spacing: -.015em;
+  }
+  .offering p { font-size: 1rem; opacity: .82; }
+  .offering__no {
+    display: block;
+    font-family: var(--body);
+    font-size: .72rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: .8rem;
+  }
+  .section--moss .offering__no { color: var(--brass); }
+
+  /* The cask list — editorial broadsheet */
+  .casks { margin-top: 1.5rem; max-width: 44rem; }
+  .cask {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px dashed rgba(199, 180, 134, .35);
+    font-family: var(--display);
+    font-variation-settings: "opsz" 72;
+  }
+  .cask:last-child { border-bottom: none; }
+  .cask__name { font-size: 1.45rem; font-weight: 600; letter-spacing: -.01em; }
+  .cask__name em { font-style: italic; color: var(--brass); font-weight: 400; }
+  .cask__meta { font-family: var(--body); font-size: .82rem; letter-spacing: .15em; text-transform: uppercase; color: var(--brass); white-space: nowrap; }
+
+  /* Hours table */
+  .hours {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .5rem 2rem;
+    max-width: 22rem;
+    font-family: var(--display);
+    font-variation-settings: "opsz" 24;
+    font-size: 1.05rem;
+  }
+  .hours dt { font-weight: 600; }
+  .hours dt::after { content: ""; }
+  .hours dd { color: rgba(244, 239, 230, .8); text-align: right; }
+
+  /* Contact / footer-as-letterhead */
+  #contact .letterhead {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+  @media (max-width: 800px) { #contact .letterhead { grid-template-columns: 1fr; } }
+  .letterhead address {
+    font-style: normal;
+    font-family: var(--display);
+    font-variation-settings: "opsz" 72;
+    font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+    line-height: 1.2;
+    letter-spacing: -.015em;
+  }
+  .letterhead address span { display: block; }
+  .letterhead .map {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    border: 1px solid rgba(244, 239, 230, .2);
+    background: var(--moss-soft);
+  }
+  .letterhead .map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(.4) contrast(1.05); display: block; }
+  .letterhead .lines {
+    margin-top: 2rem;
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+  .letterhead .lines a:hover { color: var(--brass); }
+
+  /* Gallery placeholder — editorial */
+  #gallery .frames {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 9rem;
+    gap: .8rem;
+    margin-top: 2.5rem;
+  }
+  .frame {
+    background: linear-gradient(135deg, rgba(63,81,71,.18), rgba(199,180,134,.18));
+    border: 1px solid rgba(63,81,71,.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--moss-soft);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: .9rem;
+    letter-spacing: .04em;
+    text-align: center;
+    padding: 1rem;
+  }
+  .frame--a { grid-column: span 7; grid-row: span 2; }
+  .frame--b { grid-column: span 5; grid-row: span 2; }
+  .frame--c { grid-column: span 4; }
+  .frame--d { grid-column: span 4; }
+  .frame--e { grid-column: span 4; }
+  @media (max-width: 700px) {
+    .frame--a, .frame--b, .frame--c, .frame--d, .frame--e { grid-column: span 12; grid-row: span 1; min-height: 12rem; }
+  }
+
+  /* ─────── FOOTER ─────── */
+  footer.foot {
+    background: var(--moss);
+    color: var(--candle);
+    padding: 3rem clamp(1.2rem, 5vw, 4rem);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(199, 180, 134, .2);
+  }
+  footer.foot small { font-size: .8rem; color: rgba(244, 239, 230, .6); }
+  footer.foot .mark { font-family: var(--display); font-style: italic; }
+  footer.foot a { color: var(--brass); }
+
+  /* Scroll reveal */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(2rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* CTA pill */
+  .cta {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--brass);
+    color: var(--moss);
+    padding: .9rem 1.4rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1rem;
+    border: 1px solid var(--brass);
+    transition: background .25s, color .25s;
+  }
+  .cta:hover { background: transparent; color: var(--brass); }
+  .section--moss .cta { background: var(--brass); color: var(--moss); }
+  .section--moss .cta:hover { background: transparent; color: var(--brass); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#home" class="nav__mark">The Crossways</a>
+  <nav class="nav__links">
+    <a href="#about">About</a>
+    <a href="#whatson">What's On</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Find Us</a>
+  </nav>
+  <a href="tel:+441553771947" class="nav__phone">01553 771947</a>
+</header>
+
+<!-- ─────── HERO / HOME ─────── -->
+<section id="home" class="hero">
+  <div class="hero__eyebrow">King's Lynn · PE30 · Est. as a locals' pub</div>
+  <h1>The <span class="hero__break">Cross<em>ways</em></span></h1>
+  <div class="hero__meta">
+    <div>
+      <strong>Where</strong>
+      55 South Everard Street<br>King's Lynn, PE30 5HJ
+    </div>
+    <div>
+      <strong>Telephone</strong>
+      <a href="tel:+441553771947">01553 771947</a>
+    </div>
+    <div>
+      <strong>The mood</strong>
+      Tucked away.<br>Always welcoming.
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Sharp's Doom Bar</span>
+    <span>Timothy Taylor Landlord</span>
+    <span>A rotating cask</span>
+    <span>Live music · Fridays</span>
+    <span>Garden out back</span>
+    <span>Dogs on leads welcome</span>
+    <span>Sharp's Doom Bar</span>
+    <span>Timothy Taylor Landlord</span>
+    <span>A rotating cask</span>
+    <span>Live music · Fridays</span>
+    <span>Garden out back</span>
+    <span>Dogs on leads welcome</span>
+  </div>
+</div>
+
+<!-- ─────── ABOUT ─────── -->
+<section id="about" class="section">
+  <div class="grid">
+    <div>
+      <span class="section__eyebrow">About</span>
+      <h2 class="reveal">A locals' pub, <em>tucked away</em> close to the centre.</h2>
+    </div>
+    <div class="copy reveal">
+      <p>The Crossways sits a short walk from King's Lynn station, on the corner of South Everard Street. It is what a pub should be — a small room, a bar, a fireplace, real ale on the pump, and people who already know each other's order.</p>
+      <p>The pub was re-opened in June 2024 under new management, with the slow, patient work of refurbishing it under way. The bones are old and unchanged. Sit at the bar, walk through to the back for darts and pool, or step outside to the patio when the weather decides.</p>
+      <p>It is not the loudest pub in King's Lynn. That is the point.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── WHAT'S ON / SERVICES ─────── -->
+<section id="whatson" class="section section--moss">
+  <span class="section__eyebrow">What's on the bar</span>
+  <h2 class="reveal">Cask ale, <em>kept properly</em>.</h2>
+
+  <div class="casks reveal">
+    <div class="cask">
+      <span class="cask__name">Sharp's <em>Doom Bar</em></span>
+      <span class="cask__meta">Session bitter · 4.0%</span>
+    </div>
+    <div class="cask">
+      <span class="cask__name">Timothy Taylor <em>Landlord</em></span>
+      <span class="cask__meta">Session bitter · 4.3%</span>
+    </div>
+    <div class="cask">
+      <span class="cask__name">A rotating <em>changing cask</em></span>
+      <span class="cask__meta">Ask at the bar</span>
+    </div>
+  </div>
+
+  <div class="offerings">
+    <div class="offering reveal">
+      <span class="offering__no">01</span>
+      <h3>Live music</h3>
+      <p>Friday night sessions in the bar. Folk, blues, rock, whoever's booked in.</p>
+    </div>
+    <div class="offering reveal">
+      <span class="offering__no">02</span>
+      <h3>Darts &amp; pool</h3>
+      <p>The back room is set up for it. Throw a few. Lose a few. Stay for another.</p>
+    </div>
+    <div class="offering reveal">
+      <span class="offering__no">03</span>
+      <h3>The garden</h3>
+      <p>A patio and a covered drinking area for the days when the British weather can't make its mind up.</p>
+    </div>
+    <div class="offering reveal">
+      <span class="offering__no">04</span>
+      <h3>Dogs welcome</h3>
+      <p>On a lead, through the door, water bowl by the bar. They are usually the first to be served.</p>
+    </div>
+    <div class="offering reveal">
+      <span class="offering__no">05</span>
+      <h3>Family-friendly</h3>
+      <p>Children are welcome during the day. Step-free entry. Free Wi-Fi if you need it.</p>
+    </div>
+    <div class="offering reveal">
+      <span class="offering__no">06</span>
+      <h3>By the station</h3>
+      <p>About five minutes on foot from King's Lynn rail. The first pub off the train, and the last one before it.</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 3.5rem;">
+    <span class="section__eyebrow">Opening hours</span>
+    <dl class="hours reveal" style="margin-top: 1rem;">
+      <dt>Monday</dt><dd>Noon — 8pm</dd>
+      <dt>Tuesday</dt><dd>Noon — 10pm</dd>
+      <dt>Wednesday</dt><dd>Noon — 10pm</dd>
+      <dt>Thursday</dt><dd>Noon — 10pm</dd>
+      <dt>Friday</dt><dd>Noon — 11pm</dd>
+      <dt>Saturday</dt><dd>Noon — Midnight</dd>
+      <dt>Sunday</dt><dd>Noon — 8pm</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ─────── GALLERY ─────── -->
+<section id="gallery" class="section">
+  <span class="section__eyebrow">Photographs</span>
+  <h2 class="reveal">The room, <em>as it stands</em>.</h2>
+  <p style="max-width: 36rem; opacity: .75; margin-top: 1rem;">Photographs of the bar, the back room and the garden will sit here as the refurbishment progresses. In the meantime — come and see it for yourself.</p>
+
+  <div class="frames reveal">
+    <div class="frame frame--a">The bar</div>
+    <div class="frame frame--b">The back room</div>
+    <div class="frame frame--c">The garden</div>
+    <div class="frame frame--d">Friday night</div>
+    <div class="frame frame--e">The cellar</div>
+  </div>
+</section>
+
+<!-- ─────── CONTACT ─────── -->
+<section id="contact" class="section section--moss">
+  <span class="section__eyebrow">Find us</span>
+  <h2 class="reveal">On the corner of <em>South Everard Street</em>.</h2>
+
+  <div class="letterhead">
+    <div class="reveal">
+      <address>
+        <span>The Crossways</span>
+        <span>55 South Everard Street</span>
+        <span>King's Lynn</span>
+        <span>Norfolk · PE30 5HJ</span>
+      </address>
+
+      <div class="lines">
+        <div><strong style="color:var(--brass); font-family:var(--display); font-style:italic; font-weight:400;">Telephone</strong> &middot; <a href="tel:+441553771947">01553 771947</a></div>
+        <div><strong style="color:var(--brass); font-family:var(--display); font-style:italic; font-weight:400;">By foot</strong> &middot; ~5 minutes from King's Lynn rail station</div>
+        <div><strong style="color:var(--brass); font-family:var(--display); font-style:italic; font-weight:400;">By car</strong> &middot; PE30 5HJ for the satnav</div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <a href="tel:+441553771947" class="cta">Call the bar — 01553 771947 →</a>
+      </div>
+    </div>
+
+    <div class="map reveal">
+      <iframe
+        src="https://www.google.com/maps?q=The+Crossways+55+South+Everard+Street+King%27s+Lynn+PE30+5HJ&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Map showing The Crossways, 55 South Everard Street, King's Lynn PE30 5HJ"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span class="mark">The Crossways · King's Lynn</span>
+  <small>55 South Everard Street, PE30 5HJ &middot; <a href="tel:+441553771947">01553 771947</a></small>
+</footer>
+
+</body>
+</html>
